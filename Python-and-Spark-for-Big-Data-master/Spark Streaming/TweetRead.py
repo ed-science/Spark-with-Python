@@ -19,14 +19,14 @@ class TweetsListener(StreamListener):
       self.client_socket = csocket
 
   def on_data(self, data):
-      try:
-          msg = json.loads( data )
-          print( msg['text'].encode('utf-8') )
-          self.client_socket.send( msg['text'].encode('utf-8') )
-          return True
-      except BaseException as e:
-          print("Error on_data: %s" % str(e))
+    try:
+      msg = json.loads( data )
+      print( msg['text'].encode('utf-8') )
+      self.client_socket.send( msg['text'].encode('utf-8') )
       return True
+    except BaseException as e:
+      print(f"Error on_data: {str(e)}")
+    return True
 
   def on_error(self, status):
       print(status)
@@ -45,11 +45,11 @@ if __name__ == "__main__":
   port = 5555                 # Reserve a port for your service.
   s.bind((host, port))        # Bind to the port
 
-  print("Listening on port: %s" % str(port))
+  print(f"Listening on port: {port}")
 
   s.listen(5)                 # Now wait for client connection.
   c, addr = s.accept()        # Establish connection with client.
 
-  print( "Received request from: " + str( addr ) )
+  print(f"Received request from: {str(addr)}")
 
   sendData( c )
